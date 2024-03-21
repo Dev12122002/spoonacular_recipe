@@ -46,7 +46,7 @@ function Home() {
     const fetchData = async (searchString) => {
         try {
             if (searchString === "") {
-                const response = await Axios.get(`https://api.spoonacular.com/recipes/random?number=12&apiKey=${process.env.REACT_APP_API_KEY}`);
+                const response = await Axios.get(`https://api.spoonacular.com/recipes/random?number=12&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
                 // console.log(RecipeList.concat(await response.data.recipes));
 
                 updateRecipeList(RecipeList.concat(response.data.recipes));
