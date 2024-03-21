@@ -50,6 +50,8 @@ const RecipeInfo = styled.span`
 const DiseaseComponent = (props) => {
   const { image, title, summary } = props.Recipe;
   const infoRef = useRef(null);
+
+  // eslint-disable-next-line
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   const handleImageError = (event) => {

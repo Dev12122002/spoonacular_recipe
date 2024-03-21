@@ -69,6 +69,7 @@ function Home() {
 
     useEffect(() => {
         fetchData("");
+        // eslint-disable-next-line
     }, [])
 
     const goToRecipeDetails = (recipe) => {
