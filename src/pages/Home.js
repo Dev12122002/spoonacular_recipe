@@ -104,7 +104,7 @@ function Home() {
                         onChange={onTextChange}
                         className="SearchInput"
                     />
-                    <img src="/react-Disease-app/close.png" onClick={clearSearch} className="CloseIcon" />
+                    <img src="/react-Disease-app/close.png" onClick={clearSearch} className="CloseIcon" style={{marginLeft: '0'}} />
                 </div>
             </div>
             {selectedDisease && <DiseaseInfoComponent selectedDisease={selectedDisease} onDiseaseSelect={onDiseaseSelect} />}
