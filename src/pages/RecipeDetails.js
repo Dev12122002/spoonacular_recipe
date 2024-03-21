@@ -32,7 +32,7 @@ export default function RecipeDetails() {
                         <h6 className="card-subtitle">{recipe.creditsText}</h6>
                         <div className="row mt-5">
                             <div className="col-12 white-parent">
-                                <div className="white-box text-center"><img src={recipe.image} style={{ objectFit: "contain", height: "300px" }} onError={handleImageError} alt={recipe.title} className="img-responsive" /></div>
+                                <div className="white-box text-center"><img src={recipe.image + ""} style={{ objectFit: "contain", height: "300px" }} onError={handleImageError} alt={recipe.title} className="img-responsive" /></div>
                             </div>
                             <div className="col-12 px-5 mt-5">
                                 <h4 className="box-title text-center">Recipe description</h4>

@@ -81,7 +81,7 @@ const DiseaseComponent = (props) => {
         props.goToRecipeDetails(props.Recipe);
       }}
     >
-      <CoverImage src={image} alt={title} onError={handleImageError} />
+      <CoverImage src={image + ""} alt={title} onError={handleImageError} />
       <RecipeName>{title}</RecipeName>
       <InfoColumn>
         <RecipeInfo ref={infoRef} dangerouslySetInnerHTML={{ __html: summary }}></RecipeInfo>
