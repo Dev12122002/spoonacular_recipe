@@ -1,8 +1,8 @@
 import React from 'react'
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+// import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import AuthService from "../services/auth.service";
+// import AuthService from "../services/auth.service";
 import "./Header.css";
 
 const Container = styled.div`
@@ -10,57 +10,40 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default function Header() {
+export default function Header(props) {
 
-    const [loggedin, setloggedin] = useState(AuthService.checkLoggedIn());
+    // const [loggedin, setloggedin] = useState(AuthService.checkLoggedIn());
 
-    const location = useLocation();
-    const navigate = useNavigate();
+    // const location = useLocation();
+    // const navigate = useNavigate();
 
-    // const logOut = () => {
-    //     AuthService.logout();
-    //     setloggedin(false)
-    //     navigate("/login");
-    //     // window.location.reload(false);
-    // }
 
-    // useEffect(() => {
-    //     setloggedin(AuthService.checkLoggedIn());
-    // }, [])
+    return (
+        <Container>
+            <div className="Header px-4" style={{ height: "80px" }}>
+                <div className="AppName">
+                    <img src="/images/recipe_logo.png" alt="logo" width={"55px"} height={"55px"} />
+                    <div className="mx-2">Recipe App</div>
+                </div>
 
-//   if(location.pathname !== "/"){
-      return (
-          <Container>
-              <div className="Header">
-                  <div className="AppName">
-                      <img src="/react-Disease-app/virus.png" />
-                      React Disease App
-                  </div>
+                <div className="navbar">
+                    <Link to="/" className='m-auto'>Home</Link>
+                    {/* {loggedin && <Link to="/Disease/AddDisease">Add Disease</Link>}
+                    {loggedin ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>} */}
+                </div>
 
-                  <div className="navbar">
-                      <Link to="/">Home</Link>
-                      {/* <div className="dropdown">
-                          <button className="dropbtn">Pages
-                              <i className="fa fa-caret-down"></i>
-                          </button>
-                          <div className="dropdown-content">
-                              <Link to="/">Home</Link>
-                              <Link to="/">Home</Link>
-                              <Link to="/">Home</Link>
-                          </div>
-                      </div> */}
-                      {loggedin && <Link to="/Disease/AddDisease">Add Disease</Link>}
-                      {loggedin ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}
-                      
-                  </div>
+                <div className="SearchBox">
+                    <img src="/images/search-icon.svg" alt="search" className="SearchIcon" />
+                    <input
+                        placeholder="Search Recipe or Ingrediants..."
+                        value={props.searchQuery}
+                        onChange={props.onTextChange}
+                        className="SearchInput"
+                    />
+                    <img src="/images/close.png" alt="close" onClick={props.clearSearch} className="CloseIcon" />
+                </div>
+            </div>
+        </Container >
+    )
 
-              </div>
-          </Container>
-      )
-//   }
-//   else{
-//     return(
-//         <></>
-//     )
-//   }
 }

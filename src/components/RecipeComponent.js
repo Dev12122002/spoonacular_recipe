@@ -11,6 +11,8 @@ const RecipeContainer = styled.div`
   box-shadow: 0 3px 10px 0 #aaa;
   cursor: pointer;
   max-height: 400px;
+  // border: 2px solid black;
+  background: white;
 `;
 const CoverImage = styled.img`
   object-fit: contains;
@@ -50,6 +52,11 @@ const DiseaseComponent = (props) => {
   const infoRef = useRef(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
+  const handleImageError = (event) => {
+    event.target.src = "/images/recipe_logo.png"; // Set the source of the image to the default image
+    console.error("Image not found");
+  };
+
   useEffect(() => {
     const checkOverflow = () => {
       if (infoRef.current) {
@@ -68,10 +75,11 @@ const DiseaseComponent = (props) => {
     <RecipeContainer
       onClick={() => {
         // props.onDiseaseSelect(diseasId);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        // window.scrollTo({ top: 0, behavior: "smooth" });
+        props.goToRecipeDetails(props.Recipe);
       }}
     >
-      <CoverImage src={image} alt={title} />
+      <CoverImage src={image} alt={title} onError={handleImageError} />
       <RecipeName>{title}</RecipeName>
       <InfoColumn>
         <RecipeInfo ref={infoRef} dangerouslySetInnerHTML={{ __html: summary }}></RecipeInfo>

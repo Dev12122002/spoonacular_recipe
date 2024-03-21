@@ -4,9 +4,13 @@
     align-items: center;
 }
 
+.container {
+    z-index: 100 !important;
+}
+
 .Header {
     height: 65px;
-    background-color: #18051f;
+    background-color: #530818;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -16,6 +20,8 @@
     font-size: 25px;
     font-weight: bold;
     box-shadow: 0 3px 6px 0 #555;
+    position: fixed;
+    width: 100%;
 }
 
 .SearchBox {
@@ -35,14 +41,17 @@
 }
 
 .CloseIcon {
-    width: 25px;
-    height: 25px;
-    margin-left: 35%;
+    width: 30px;
+    height: 30px;
+    /* margin-left: 35%; */
+    margin-left: auto;
+    /* border: 2px solid black; */
+    padding: 5px;
 }
 
 .CloseIcon:hover {
-    width: 30px;
-    height: 30px;
+    /* width: 30px;
+    height: 30px; */
     transition: 0.3s;
 }
 
@@ -53,6 +62,8 @@
     border: none;
     outline: none;
     margin-left: 15px;
+    /* border: 2px solid black; */
+    width: 100%;
 }
 
 .navbar {
@@ -87,7 +98,7 @@
 
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-    background-color: rgb(71, 17, 104);
+    background-color: rgb(54, 18, 18);
     color: white;
 }
 
