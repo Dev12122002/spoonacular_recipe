@@ -126,7 +126,7 @@ function Home() {
 
     useEffect(() => {
         updateRecipeList([]);
-        // fetchData("");
+        fetchData("");
         // eslint-disable-next-line
     }, [category])
 
