@@ -155,7 +155,7 @@ function Home() {
         <Container>
             <Header category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
 
-            <RecipeContainer style={{ marginTop: "70px" }}>
+            <RecipeContainer className="rcontainer" style={{ marginTop: "10px" }}>
                 {filteredRecipeList?.length ? filteredRecipeList.map((Recipe, index) => (
                     <RecipeComponent
                         key={Recipe.id}

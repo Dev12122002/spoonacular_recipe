@@ -30,7 +30,7 @@ export default function Header(props) {
 
     return (
         // <Container>
-        <div className="Header container-fluid">
+        <div className="Header container-fluid sticky-top">
             <div className='row justify-content-between'>
                 <div className="AppName column col-lg-4 col-md-4 col-sm-5 col-12">
                     <img src="/images/recipe_logo.png" alt="logo" width={"55px"} height={"55px"} />

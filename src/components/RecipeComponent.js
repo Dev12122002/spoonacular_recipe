@@ -47,7 +47,7 @@ const RecipeInfo = styled.span`
   height: auto; /* Three lines multiplied by line height */
 `;
 
-const DiseaseComponent = (props) => {
+const RecipeComponent = (props) => {
   const { image, title, summary } = props.Recipe;
   const infoRef = useRef(null);
 
@@ -89,4 +89,4 @@ const DiseaseComponent = (props) => {
     </RecipeContainer>
   );
 };
-export default DiseaseComponent;
+export default RecipeComponent;
