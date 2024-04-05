@@ -36,6 +36,7 @@ const Placeholder = styled.img`
   margin: 150px;
   opacity: 80%;
   animation: ${rotate} 4s linear infinite; 
+  z-index: -1!important;
 `;
 
 function Home() {
@@ -125,7 +126,7 @@ function Home() {
 
     useEffect(() => {
         updateRecipeList([]);
-        fetchData("");
+        // fetchData("");
         // eslint-disable-next-line
     }, [category])
 
