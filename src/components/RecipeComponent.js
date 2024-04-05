@@ -56,7 +56,7 @@ const DiseaseComponent = (props) => {
 
   const handleImageError = (event) => {
     event.target.src = "/images/recipe_logo.png"; // Set the source of the image to the default image
-    console.error("Image not found");
+    // console.error("Image not found");
   };
 
   useEffect(() => {

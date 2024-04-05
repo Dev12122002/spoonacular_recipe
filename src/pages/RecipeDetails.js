@@ -13,6 +13,7 @@ export default function RecipeDetails() {
         if (recipe === null) {
             navigate('/');
         }
+        window.scrollTo(0, 0);
         // console.log(recipe);
     }, [navigate, recipe]);
 
@@ -23,9 +24,9 @@ export default function RecipeDetails() {
 
     return (
         <>
-            <Header />
+            <Header category={false} />
 
-            {recipe && <div className="container">
+            {recipe && <div className="container ctn">
                 <div className="card">
                     <div className="card-body">
                         <h3 className="card-title mt-3">{recipe.title}</h3>

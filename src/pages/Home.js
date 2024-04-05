@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import RecipeComponent from "../components/RecipeComponent";
 // import { Link } from "react-router-dom";
 // import AuthService from "../services/auth.service";
@@ -20,43 +20,99 @@ const RecipeContainer = styled.div`
   gap: 25px;
   justify-content: space-evenly;;
 `;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 const Placeholder = styled.img`
   width: 120px;
   height: 120px;
   margin: 150px;
   opacity: 80%;
+  animation: ${rotate} 4s linear infinite; 
 `;
 
 function Home() {
 
     const [searchQuery, updateSearchQuery] = useState("");
     const [loadMore, updateLoadMore] = useState(false);
-
-    // const [loggedin, setloggedin] = useState(AuthService.checkLoggedIn());
-
+    const [category, setCategory] = useState("");
+    const [page, setPage] = useState(1);
     const [RecipeList, updateRecipeList] = useState([]);
     const [filteredRecipeList, updateFilteredRecipeList] = useState([]);
+    const [categoryRecipeList, updateCategoryRecipeList] = useState([]);
     const [error, updateError] = useState(null);
-    // const [selectedDisease, onDiseaseSelect] = useState();
-
     const [timeoutId, updateTimeoutId] = useState();
 
     const navigate = useNavigate();
 
+    const changeCategory = (category) => {
+        updateRecipeList([]);
+        updateCategoryRecipeList([]);
+        setCategory(category)
+    }
+
+    // Function to filter unique items based on ID
+    const filterUniqueItems = (apiResponse) => {
+        const uniqueIds = new Set(); // Set to track unique IDs
+        return apiResponse.filter(item => {
+            if (!uniqueIds.has(item.id)) {
+                uniqueIds.add(item.id); // Add ID to set
+                return true; // Keep the item in the filtered array
+            }
+            return false; // Discard the item
+        });
+    };
+
     const fetchData = async (searchString) => {
+
+        const pageSize = 12;
         try {
             if (searchString === "") {
-                const response = await Axios.get(`https://api.spoonacular.com/recipes/random?number=12&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
-                // console.log(RecipeList.concat(await response.data.recipes));
+                let response;
+                if (category === "") {
+                    response = await Axios.get(`https://api.spoonacular.com/recipes/random?number=${pageSize}&offset=${(page - 1) * pageSize}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
+                    updateRecipeList(filterUniqueItems(RecipeList.concat(response.data.recipes)));
+                }
+                else {
+                    response = await Axios.get(`https://api.spoonacular.com/recipes/search?cuisine=${category}&number=${pageSize}&offset=${(page - 1) * pageSize}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
 
-                updateRecipeList(RecipeList.concat(response.data.recipes));
+                    let ids = "";
+                    response.data.results.forEach(async (recipe) => {
+                        ids = ids + recipe.id + ",";
+                    });
+                    ids = ids.slice(0, -1);
+                    response = await Axios.get(`https://api.spoonacular.com/recipes/informationBulk?ids=${ids}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
+
+                    updateCategoryRecipeList(filterUniqueItems(categoryRecipeList.concat(response.data)));
+
+                }
+
+
             } else {
-                updateFilteredRecipeList(RecipeList.filter(recipe =>
-                    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    recipe.extendedIngredients.some(ingredient =>
-                        ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
-                    )
-                ));
+
+                if (categoryRecipeList.length) {
+                    updateFilteredRecipeList(categoryRecipeList.filter(recipe =>
+                        recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        recipe.extendedIngredients.some(ingredient =>
+                            ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
+                        )
+                    ));
+                }
+                else {
+                    updateFilteredRecipeList(RecipeList.filter(recipe =>
+                        recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        recipe.extendedIngredients.some(ingredient =>
+                            ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
+                        )
+                    ));
+                }
 
             }
             updateLoadMore(false);
@@ -68,9 +124,10 @@ function Home() {
     };
 
     useEffect(() => {
+        updateRecipeList([]);
         fetchData("");
         // eslint-disable-next-line
-    }, [])
+    }, [category])
 
     const goToRecipeDetails = (recipe) => {
         navigate('/RecipeDetails', { state: recipe });
@@ -95,8 +152,8 @@ function Home() {
     };
     return (
         <Container>
-            <Header searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} />
-            {/* {selectedDisease && <DiseaseInfoComponent selectedDisease={selectedDisease} onDiseaseSelect={onDiseaseSelect} />} */}
+            <Header category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
+
             <RecipeContainer style={{ marginTop: "70px" }}>
                 {filteredRecipeList?.length ? filteredRecipeList.map((Recipe, index) => (
                     <RecipeComponent
@@ -106,19 +163,26 @@ function Home() {
                     />
                 )) :
                     searchQuery === "" ? (
-                        RecipeList?.length ?
-                            RecipeList.map((Recipe, index) => (
-                                <RecipeComponent
-                                    key={Recipe.id}
-                                    Recipe={Recipe}
-                                    goToRecipeDetails={goToRecipeDetails}
-                                />
-                            )) : <Placeholder src={"images/recipe_loading1.png"} />)
+                        categoryRecipeList?.length ? categoryRecipeList.map((Recipe, index) => (
+                            <RecipeComponent
+                                key={Recipe.id}
+                                Recipe={Recipe}
+                                goToRecipeDetails={goToRecipeDetails}
+                            />
+                        )) :
+                            RecipeList?.length ?
+                                RecipeList.map((Recipe, index) => (
+                                    <RecipeComponent
+                                        key={Recipe.id}
+                                        Recipe={Recipe}
+                                        goToRecipeDetails={goToRecipeDetails}
+                                    />
+                                )) : <Placeholder src={"images/recipe_loading1.png"} />)
                         : <Placeholder src="images/recipe_loading.png" />}
             </RecipeContainer>
             {error && <div className="alert alert-danger w-25 m-auto text-center" role="alert">{error}</div>}
             {loadMore && <img className="m-auto" style={{ position: "relative", bottom: "70px" }} src="images/loading.gif" alt="Loading..." height={"140px"} width={"140px"}></img>}
-            {!loadMore && RecipeList.length && !filteredRecipeList.length && searchQuery === "" && <button className="btn btn-success m-auto mb-2" onClick={() => { updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {((!loadMore && RecipeList.length && !filteredRecipeList.length && searchQuery === "") || (!loadMore && categoryRecipeList.length && !filteredRecipeList.length && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
         </Container>
     );
 }
