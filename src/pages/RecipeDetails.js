@@ -26,7 +26,7 @@ export default function RecipeDetails() {
         <>
             <Header category={false} />
 
-            {recipe && <div className="container ctn">
+            {recipe && <div className="container mt-3 ctn">
                 <div className="card">
                     <div className="card-body">
                         <h3 className="card-title mt-3">{recipe.title}</h3>
@@ -108,6 +108,10 @@ export default function RecipeDetails() {
                 </div>
             </div>
             }
+
+            <div className='mb-2 demo'>
+                none
+            </div>
         </>
     )
 }

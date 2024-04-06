@@ -3,17 +3,28 @@
     margin-top: 20px;
 } */
 
+.demo {
+    visibility: hidden;
+    /* color: transparent; */
+}
+
 .ctn {
     /* margin-top: 100px !important; */
     z-index: -1 !important;
+    /* margin: 10px; */
+    /* border: 2px solid red !important; */
+    max-width: 80%;
+    /* max-height: 100vh; */
+    padding: 0;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-.card {
-    margin-bottom: 30px;
-}
 
 .card {
-    z-index: -1 !important;
+    /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8), 0 6px 6px rgba(0, 0, 0, 0.3); */
+    margin: 0;
+    z-index: 10 !important;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -23,6 +34,9 @@
     background-clip: border-box;
     border: 0 solid transparent;
     border-radius: 0;
+    width: 100% !important;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .card h3 {
@@ -68,12 +82,12 @@
 
 .card .card-subtitle {
     font-weight: 300;
-    margin-bottom: 10px;
+    /* margin-bottom: 5px; */
     color: #8898aa;
 }
 
 table {
-    width: 80% !important;
+    width: 90% !important;
     margin: 0 auto;
 }
 
@@ -84,11 +98,4 @@ table {
 .table-product td {
     border-top: 0px solid #dee2e6 !important;
     color: #728299 !important;
-}
-
-.body {
-    /* background: #654ea3; */
-    background: -webkit-linear-gradient(to left, #654ea3, #eaafc8);
-    background: linear-gradient(to left, #15717d, #2f0d37);
-    /* padding-bottom: 5rem; */
 }
