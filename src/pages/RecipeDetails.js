@@ -1,20 +1,49 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import "./RecipeDetails.css"
 import { useNavigate } from 'react-router-dom';
 
 export default function RecipeDetails() {
+    const [isScrollBtnVisible, setIsScrollBtnVisible] = useState(false);
+    const scrollableDivRef = useRef(null);
+
     const location = useLocation(); // Use useLocation hook to get location state
     const recipe = location.state; // Access recipe from location state
     const navigate = useNavigate();
+
+    const scrollToTop = () => {
+        if (scrollableDivRef.current) {
+            // scrollableDivRef.current.scrollTop = 0;
+            scrollableDivRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scrolling behavior
+            });
+        }
+    };
+
+    // Function to handle scroll event and toggle visibility of the arrow
+    const handleScroll = () => {
+        const scrollTop = scrollableDivRef.current.scrollTop;
+        if (scrollTop > 300) { // Adjust this threshold as needed
+            setIsScrollBtnVisible(true);
+        } else {
+            setIsScrollBtnVisible(false);
+        }
+    };
 
     useEffect(() => {
         if (recipe === null) {
             navigate('/');
         }
-        window.scrollTo(0, 0);
-        // console.log(recipe);
+
+        scrollableDivRef.current.addEventListener('scroll', handleScroll);
+
+        return () => {
+            // eslint-disable-next-line
+            scrollableDivRef.current.removeEventListener('scroll', handleScroll);
+        };
+
     }, [navigate, recipe]);
 
     const handleImageError = (event) => {
@@ -25,9 +54,11 @@ export default function RecipeDetails() {
     return (
         <>
             <Header category={false} />
-
+            <div className={`floating-arrow ${isScrollBtnVisible ? 'visible' : ''}`} onClick={scrollToTop}>
+                <img src="/images/up.svg" alt="menu" />
+            </div>
             {recipe && <div className="container mt-3 ctn">
-                <div className="card">
+                <div className="card" ref={scrollableDivRef}>
                     <div className="card-body">
                         <h3 className="card-title mt-3">{recipe.title}</h3>
                         <h6 className="card-subtitle">{recipe.creditsText}</h6>

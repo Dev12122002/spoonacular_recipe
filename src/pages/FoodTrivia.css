@@ -48,7 +48,7 @@ h3 {
 .tbtn {
     /* margin-top: 20px; */
     display: block;
-    background-color: #c52323;
+    background-color: #8b0909;
     color: #fff;
     border: 0;
     border-radius: 10px;
@@ -87,27 +87,4 @@ h3 {
         padding: 4%;
         /* margin-top: 0; */
     }
-}
-
-/* Styles for WebKit browsers (Chrome, Safari, newer versions of Opera) */
-::-webkit-scrollbar {
-    width: 10px;
-    /* Width of the scrollbar */
-}
-
-::-webkit-scrollbar-track {
-    background: #e3dede;
-    /* Color of the track */
-}
-
-::-webkit-scrollbar-thumb {
-    background: #c37a7a;
-    /* Color of the scrollbar thumb */
-    border-radius: 5px;
-    /* Rounded corners */
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #a25050;
-    /* Color of the scrollbar thumb on hover */
 }

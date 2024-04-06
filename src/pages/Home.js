@@ -50,6 +50,7 @@ function Home() {
     const [categoryRecipeList, updateCategoryRecipeList] = useState([]);
     const [error, updateError] = useState(null);
     const [timeoutId, updateTimeoutId] = useState();
+    const [isScrollBtnVisible, setIsScrollBtnVisible] = useState(false);
 
     const navigate = useNavigate();
 
@@ -70,6 +71,24 @@ function Home() {
             }
             return false; // Discard the item
         });
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling behavior
+        });
+    };
+
+    // Function to handle scroll event and toggle visibility of the arrow
+    const handleScroll = () => {
+        const scrollTop = window.pageYOffset;
+
+        if (scrollTop > 300) { // Adjust this threshold as needed
+            setIsScrollBtnVisible(true);
+        } else {
+            setIsScrollBtnVisible(false);
+        }
     };
 
     const fetchData = async (searchString) => {
@@ -127,7 +146,14 @@ function Home() {
 
     useEffect(() => {
         updateRecipeList([]);
+
+        window.addEventListener('scroll', handleScroll);
         fetchData("");
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
         // eslint-disable-next-line
     }, [category])
 
@@ -154,8 +180,11 @@ function Home() {
     };
     return (
         <Container>
-            <Header showSearch={true} category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
 
+            <Header showSearch={true} category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
+            <div className={`floating-arrow ${isScrollBtnVisible ? 'visible' : ''}`} onClick={scrollToTop}>
+                <img src="/images/up.svg" alt="menu" />
+            </div>
             <RecipeContainer className="rcontainer" style={{ marginTop: "10px" }}>
                 {filteredRecipeList?.length ? filteredRecipeList.map((Recipe, index) => (
                     <RecipeComponent
@@ -185,8 +214,8 @@ function Home() {
             {error && <div className="alert alert-danger w-auto m-auto text-center" role="alert">{error}</div>}
             {loadMore && <img className="m-auto" style={{ position: "relative", bottom: "70px" }} src="images/loading.gif" alt="Loading..." height={"140px"} width={"140px"}></img>}
             {/* {((!loadMore && !RecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "") || (!loadMore && !categoryRecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>} */}
-            {(category === "" && RecipeList.length !== 0 && searchQuery === "") && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
-            {(category !== "" && categoryRecipeList.length !== 0 && searchQuery === "") && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {(category === "" && RecipeList.length !== 0 && searchQuery === "") && <button className="btn m-auto mb-3 loadbtn" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {(category !== "" && categoryRecipeList.length !== 0 && searchQuery === "") && <button className="btn m-auto mb-2 loadbtn" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
         </Container>
     );
 }

@@ -8,7 +8,8 @@
 
 .Header {
     height: auto;
-    background-color: #530818;
+    background-color: #500c0c;
+    /* background-color: #530818; */
     color: white;
     align-items: center;
     /* padding: 1%; */
@@ -93,7 +94,7 @@
 .dropdown-menu {
     /* border: 2px solid white !important; */
     border-top: none !important;
-    background-color: #530818 !important;
+    background-color: #500c0c !important;
     position: absolute;
     /* inset: 10px 30px auto 0px !important; */
     transform: translate3d(15px, 36.8px, 0px) !important;
