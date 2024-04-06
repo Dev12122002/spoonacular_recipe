@@ -90,7 +90,7 @@ export default function Header(props) {
 
 
                 <div className='mt-1 column col-lg col-md col-sm-12 col-12'>
-                    <div className="SearchBox w-100">
+                    {props.showSearch && <div className="SearchBox w-100">
                         <img src="/images/search-icon.svg" alt="search" className="SearchIcon" />
                         <input
                             placeholder="Search Recipe or Ingrediants..."
@@ -99,7 +99,7 @@ export default function Header(props) {
                             className="SearchInput"
                         />
                         <img src="/images/close.png" alt="close" onClick={props.clearSearch} className="CloseIcon" />
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>

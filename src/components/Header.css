@@ -92,9 +92,16 @@
 
 .dropdown-menu {
     /* border: 2px solid white !important; */
+    border-top: none !important;
+    background-color: #530818;
     position: absolute;
     inset: 10px 30px auto 0px !important;
     transform: translate3d(15px, 36.8px, 0px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 160px !important;
+    /* box-shadow: 7px 7px 2px 1px rgba(0, 0, 0, 0.6); */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.4);
 }
 
 

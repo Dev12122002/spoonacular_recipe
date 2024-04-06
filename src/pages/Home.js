@@ -126,7 +126,7 @@ function Home() {
 
     useEffect(() => {
         updateRecipeList([]);
-        fetchData("");
+        // fetchData("");
         // eslint-disable-next-line
     }, [category])
 
@@ -153,7 +153,7 @@ function Home() {
     };
     return (
         <Container>
-            <Header category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
+            <Header showSearch={true} category={true} searchQuery={searchQuery} onTextChange={onTextChange} clearSearch={clearSearch} setCategory={changeCategory} />
 
             <RecipeContainer className="rcontainer" style={{ marginTop: "10px" }}>
                 {filteredRecipeList?.length ? filteredRecipeList.map((Recipe, index) => (
