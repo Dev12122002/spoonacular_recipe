@@ -33,7 +33,7 @@ const rotate = keyframes`
 const Placeholder = styled.img`
   width: 120px;
   height: 120px;
-  margin: 150px;
+  margin-top: 25vh;
   opacity: 80%;
   animation: ${rotate} 4s linear infinite; 
   z-index: -1!important;
@@ -54,7 +54,8 @@ function Home() {
     const navigate = useNavigate();
 
     const changeCategory = (category) => {
-        updateRecipeList([]);
+        if (category !== "")
+            updateRecipeList([]);
         updateCategoryRecipeList([]);
         setCategory(category)
     }
@@ -183,7 +184,9 @@ function Home() {
             </RecipeContainer>
             {error && <div className="alert alert-danger w-auto m-auto text-center" role="alert">{error}</div>}
             {loadMore && <img className="m-auto" style={{ position: "relative", bottom: "70px" }} src="images/loading.gif" alt="Loading..." height={"140px"} width={"140px"}></img>}
-            {((!loadMore && RecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "") || (!loadMore && categoryRecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {/* {((!loadMore && !RecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "") || (!loadMore && !categoryRecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>} */}
+            {(category === "" && RecipeList.length !== 0 && searchQuery === "") && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {(category !== "" && categoryRecipeList.length !== 0 && searchQuery === "") && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
         </Container>
     );
 }

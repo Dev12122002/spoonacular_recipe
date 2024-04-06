@@ -4,6 +4,9 @@
 
 Body {
   /* background-color: #efece8 !important; */
+  max-width: 100% !important;
+  border: 2px solid black;
+  height: 100vh;
   background-color: rgb(240, 214, 216) !important;
 }
 

@@ -1,24 +1,18 @@
 import React from 'react'
-// import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import styled from "styled-components";
-// import AuthService from "../services/auth.service";
 import "./Header.css";
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { NavDropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 
-// const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 export default function Header(props) {
+    const [showCatDropdown, setShowCatDropdown] = useState(false);
+    const [showPagesDropdown, setShowPagesCatDropdown] = useState(false);
+    const [isWideScreen, setIsWideScreen] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
-    // const [loggedin, setloggedin] = useState(AuthService.checkLoggedIn());
-
-    // const location = useLocation();
     const navigate = useNavigate();
     const categories = [
         "African", "Asian", "American", "British", "Cajun", "Caribbean",
@@ -28,79 +22,196 @@ export default function Header(props) {
         "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"
     ];
 
+    const handleMouseEnter = (type) => {
+        if (type === "category")
+            setShowCatDropdown(true);
+        else if (type === "pages")
+            setShowPagesCatDropdown(true);
+    };
+
+    const handleMouseLeave = (type) => {
+        if (type === "category")
+            setShowCatDropdown(false);
+        else if (type === "pages")
+            setShowPagesCatDropdown(false);
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsWideScreen(window.innerWidth > 576); // Set the width breakpoint as per your requirement
+        };
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Call handleResize once on initial render
+        handleResize();
+
+        // Clean up event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         // <Container>
         <div className="Header container-fluid sticky-top">
             <div className='row justify-content-between'>
-                <div className="AppName column col-lg-4 col-md-4 col-sm-5 col-12">
+                <div className="AppName column col-lg-4 col-md-4 col-sm-5 col-10">
                     <img src="/images/recipe_logo.png" alt="logo" width={"55px"} height={"55px"} />
                     <div className="mx-2">Recipe App</div>
                 </div>
 
-                <div className="mt-1 navbar column col-lg col-md col-sm col mx-4">
-                    <div className='row links justify-content-around w-100 m-auto'>
-                        <div className='col column'>
-                            <Link to="/" className='m-auto'>Home</Link>
-                        </div>
-                        {props.category &&
-                            <div className='col column'>
-                                {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
-                                <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
-                                    title="Category"
-                                    menuVariant="dark">
+                {!isWideScreen && <div className="mt-2 column col-lg col-md col-sm col" onClick={() => setExpanded(!expanded)}>
+                    {!expanded ?
+                        <img src="/images/menu.svg" alt="menu" style={{ color: "white" }} />
+                        :
+                        <img src="/images/up.svg" alt="close" style={{ color: "white" }} />}
+                </div>}
 
-                                    <div className='dmenu'>
-                                        <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item>
-                                        {categories.map((category, index) => (
-                                            <NavDropdown.Item
-                                                key={index}
-                                                className='ditem'
-                                                onClick={() => props.setCategory(category)}
-                                            >
-                                                {category}
-                                            </NavDropdown.Item>
-                                        ))}
+                {!isWideScreen ?
+                    (expanded &&
+                        <>
+                            <div className="mt-1 navbar column col-lg col-md col-sm col mx-4">
+                                <div className='row links justify-content-around w-100 m-auto'>
+                                    <div className='col column'>
+                                        <Link to="/" className='m-auto'>Home</Link>
                                     </div>
+                                    {props.category &&
+                                        <div className='col column'>
+                                            {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
+                                            <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
+                                                title="Category"
+                                                menuVariant="dark"
+                                                show={showCatDropdown}
+                                                onMouseEnter={() => handleMouseEnter("category")}
+                                                onMouseLeave={() => handleMouseLeave("category")}>
 
-                                </NavDropdown>
+                                                <div className='dmenu'>
+                                                    <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item>
+                                                    {categories.map((category, index) => (
+                                                        <NavDropdown.Item
+                                                            key={index}
+                                                            className='ditem'
+                                                            onClick={(e) => { e.preventDefault(); props.setCategory(category) }}
+                                                        >
+                                                            {category}
+                                                        </NavDropdown.Item>
+                                                    ))}
+                                                </div>
 
-                                {/* </div> */}
-                            </div>
-                        }
+                                            </NavDropdown>
 
-                        <div className='col column'>
-                            {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
-                            <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
-                                title="Pages"
-                                menuVariant="dark">
+                                            {/* </div> */}
+                                        </div>
+                                    }
 
-                                <div className='dmenu'>
-                                    {/* <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item> */}
-                                    <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodJokes")}>Food Jokes</NavDropdown.Item>
-                                    <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodTrivia")}>Food Trivia</NavDropdown.Item>
+                                    <div className='col column'>
+                                        {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
+                                        <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
+                                            title="Pages"
+                                            menuVariant="dark"
+                                            show={showPagesDropdown}
+                                            onMouseEnter={() => handleMouseEnter("pages")}
+                                            onMouseLeave={() => handleMouseLeave("pages")}>
+
+                                            <div className='dmenu'>
+                                                {/* <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item> */}
+                                                <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodJokes")}>Food Jokes</NavDropdown.Item>
+                                                <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodTrivia")}>Food Trivia</NavDropdown.Item>
+                                            </div>
+
+                                        </NavDropdown>
+
+                                        {/* </div> */}
+                                    </div>
                                 </div>
+                            </div>
 
-                            </NavDropdown>
+                            <div className='mt-1 column col-lg col-md col-sm-12 col-12'>
+                                {props.showSearch && <div className="SearchBox w-100">
+                                    <img src="/images/search-icon.svg" alt="search" className="SearchIcon" />
+                                    <input
+                                        placeholder="Search Recipe or Ingrediants..."
+                                        value={props.searchQuery}
+                                        onChange={props.onTextChange}
+                                        className="SearchInput"
+                                    />
+                                    <img src="/images/close.png" alt="close" onClick={props.clearSearch} className="CloseIcon" />
+                                </div>}
+                            </div>
+                        </>
+                    )
+                    :
+                    <>
+                        <div className="mt-1 navbar column col-lg col-md col-sm col mx-4">
+                            <div className='row links justify-content-around w-100 m-auto'>
+                                <div className='col column'>
+                                    <Link to="/" className='m-auto'>Home</Link>
+                                </div>
+                                {props.category &&
+                                    <div className='col column'>
+                                        {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
+                                        <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
+                                            title="Category"
+                                            menuVariant="dark"
+                                            show={showCatDropdown}
+                                            onMouseEnter={() => handleMouseEnter("category")}
+                                            onMouseLeave={() => handleMouseLeave("category")}>
 
-                            {/* </div> */}
+                                            <div className='dmenu'>
+                                                <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item>
+                                                {categories.map((category, index) => (
+                                                    <NavDropdown.Item
+                                                        key={index}
+                                                        className='ditem'
+                                                        onClick={(e) => { e.preventDefault(); props.setCategory(category) }}
+                                                    >
+                                                        {category}
+                                                    </NavDropdown.Item>
+                                                ))}
+                                            </div>
+
+                                        </NavDropdown>
+
+                                        {/* </div> */}
+                                    </div>
+                                }
+
+                                <div className='col column'>
+                                    {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
+                                    <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
+                                        title="Pages"
+                                        menuVariant="dark"
+                                        show={showPagesDropdown}
+                                        onMouseEnter={() => handleMouseEnter("pages")}
+                                        onMouseLeave={() => handleMouseLeave("pages")}>
+
+                                        <div className='dmenu'>
+                                            {/* <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item> */}
+                                            <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodJokes")}>Food Jokes</NavDropdown.Item>
+                                            <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodTrivia")}>Food Trivia</NavDropdown.Item>
+                                        </div>
+
+                                    </NavDropdown>
+
+                                    {/* </div> */}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-
-                <div className='mt-1 column col-lg col-md col-sm-12 col-12'>
-                    {props.showSearch && <div className="SearchBox w-100">
-                        <img src="/images/search-icon.svg" alt="search" className="SearchIcon" />
-                        <input
-                            placeholder="Search Recipe or Ingrediants..."
-                            value={props.searchQuery}
-                            onChange={props.onTextChange}
-                            className="SearchInput"
-                        />
-                        <img src="/images/close.png" alt="close" onClick={props.clearSearch} className="CloseIcon" />
-                    </div>}
-                </div>
+                        <div className='mt-1 column col-lg col-md col-sm-12 col-12'>
+                            {props.showSearch && <div className="SearchBox w-100">
+                                <img src="/images/search-icon.svg" alt="search" className="SearchIcon" />
+                                <input
+                                    placeholder="Search Recipe or Ingrediants..."
+                                    value={props.searchQuery}
+                                    onChange={props.onTextChange}
+                                    className="SearchInput"
+                                />
+                                <img src="/images/close.png" alt="close" onClick={props.clearSearch} className="CloseIcon" />
+                            </div>}
+                        </div>
+                    </>
+                }
             </div>
         </div>
 
