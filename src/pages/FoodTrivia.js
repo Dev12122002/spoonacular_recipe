@@ -32,14 +32,14 @@ export default function FoodJoke() {
     return (
         <>
             <Header />
-            <div className="container mt-5 text-center">
+            <div className="container mt-5 text-center fctn">
                 {error && <div className="alert alert-danger w-auto m-auto text-center" role="alert">{error}</div>}
                 {!error && <>
                     <h3>Food Trivia</h3>
                     <div id="joke" className="joke">
                         {renderTextWithNewlines(trivia)}
                     </div>
-                    <button id="jokeBtn" className="jbtn mt-4" onClick={generateJoke}>
+                    <button id="triviaBtn" className="tbtn mt-4" onClick={generateJoke}>
                         Get Another Food Trivia
                     </button>
                 </>}

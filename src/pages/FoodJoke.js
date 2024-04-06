@@ -32,7 +32,7 @@ export default function FoodJoke() {
     return (
         <>
             <Header />
-            <div className="container mt-5">
+            <div className="container mt-5 fctn">
                 {error && <div className="alert alert-danger w-auto m-auto text-center" role="alert">{error}</div>}
                 {!error && <>
                     <h3>Don't Laugh Challenge</h3>
