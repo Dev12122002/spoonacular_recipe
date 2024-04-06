@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 // const Container = styled.div`
@@ -18,7 +19,7 @@ export default function Header(props) {
     // const [loggedin, setloggedin] = useState(AuthService.checkLoggedIn());
 
     // const location = useLocation();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const categories = [
         "African", "Asian", "American", "British", "Cajun", "Caribbean",
         "Chinese", "Eastern European", "European", "French", "German",
@@ -67,6 +68,23 @@ export default function Header(props) {
                                 {/* </div> */}
                             </div>
                         }
+
+                        <div className='col column'>
+                            {/* <div style={{ maxHeight: '200px', overflowY: 'auto' }}> */}
+                            <NavDropdown className='dropdown' id="nav-dropdown-dark-example"
+                                title="Pages"
+                                menuVariant="dark">
+
+                                <div className='dmenu'>
+                                    {/* <NavDropdown.Item className='ditem' onClick={() => props.setCategory("")}>All</NavDropdown.Item> */}
+                                    <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodJokes")}>Food Jokes</NavDropdown.Item>
+                                    <NavDropdown.Item className='ditem' onClick={() => navigate("/FoodTrivia")}>Food Trivia</NavDropdown.Item>
+                                </div>
+
+                            </NavDropdown>
+
+                            {/* </div> */}
+                        </div>
                     </div>
                 </div>
 

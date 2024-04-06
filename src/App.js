@@ -9,6 +9,8 @@ import RecipeDetails from './pages/RecipeDetails';
 import { Toaster } from 'react-hot-toast';
 import React from 'react'
 import NotFound from './pages/NotFound';
+import FoodJoke from './pages/FoodJoke';
+import FoodTrivia from './pages/FoodTrivia';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/RecipeDetails" element={<RecipeDetails />} />
+        <Route path="/FoodJokes" element={<FoodJoke />} />
+        <Route path="/FoodTrivia" element={<FoodTrivia />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} /> */}

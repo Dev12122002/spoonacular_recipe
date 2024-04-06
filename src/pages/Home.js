@@ -181,9 +181,9 @@ function Home() {
                                 )) : <Placeholder src={"images/recipe_loading1.png"} />)
                         : <Placeholder src="images/recipe_loading.png" />}
             </RecipeContainer>
-            {error && <div className="alert alert-danger w-25 m-auto text-center" role="alert">{error}</div>}
+            {error && <div className="alert alert-danger w-auto m-auto text-center" role="alert">{error}</div>}
             {loadMore && <img className="m-auto" style={{ position: "relative", bottom: "70px" }} src="images/loading.gif" alt="Loading..." height={"140px"} width={"140px"}></img>}
-            {((!loadMore && RecipeList.length && !filteredRecipeList.length && searchQuery === "") || (!loadMore && categoryRecipeList.length && !filteredRecipeList.length && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
+            {((!loadMore && RecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "") || (!loadMore && categoryRecipeList.length === 0 && !filteredRecipeList.length === 0 && searchQuery === "")) && <button className="btn btn-success m-auto mb-2" onClick={() => { setPage(pageCnt => pageCnt + 1); updateLoadMore(true); fetchData(""); }} style={{ width: "auto" }}>Load More</button>}
         </Container>
     );
 }
