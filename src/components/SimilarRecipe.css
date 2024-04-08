@@ -1,0 +1,279 @@
+/* .sctn {
+    border: 2px solid black;
+} */
+
+.slider {
+    width: 80% !important;
+    /* height: 40vh !important; */
+    /* border: 2px solid black; */
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    /* max-height: 70vh; */
+    /* overflow: hidden; */
+    /* display: flex !important; */
+    justify-content: center !important;
+    /* z-index: -1 !important; */
+}
+
+.slick-slide>div {
+    /* border: 2px solid pink !important; */
+    padding: 0px !important;
+}
+
+.wrapper {
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+    overflow: hidden;
+}
+
+.scard {
+    /* width: 280px;
+    height: 360px; */
+    /* width: auto !important; */
+    /* height: 100% !important; */
+    width: 120% !important;
+    height: 45vh;
+    border-radius: 15px;
+    /* padding: 1.5rem; */
+    /* background: transparent !important; */
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    transition: 0.4s ease-out;
+    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: none !important;
+    /* z-index: 999 !important; */
+    transform: scale(0.8);
+    /* border: 2px solid white !important; */
+    /* z-index: 1 !important; */
+}
+
+.scard:hover {
+    /* transform: translateY(20px); */
+    transform: scale(1);
+    z-index: 999 !important;
+    box-shadow: none;
+}
+
+@media (min-width: 1000px) {
+    .scard .info button {
+        top: 73% !important;
+        font-size: 15px;
+    }
+
+    .scard .info h1 {
+        font-size: 25px !important;
+        top: 47% !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .scard:hover {
+        transform: scale(0.9);
+    }
+
+    .scard .info button {
+        top: 73% !important;
+        font-size: 15px;
+    }
+
+    .scard .info h1 {
+        font-size: 25px !important;
+        top: 47% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .scard {
+        width: 110% !important;
+        height: 40vh;
+    }
+
+    .scard .info button {
+        top: 73% !important;
+        font-size: 15px;
+    }
+
+    .scard .info h1 {
+        font-size: 23px !important;
+        top: 47% !important;
+    }
+}
+
+@media (max-width: 630px) {
+    .scard {
+        width: 110% !important;
+        height: 35vh;
+    }
+
+    .scard .info button {
+        top: 65% !important;
+        font-size: 15px;
+    }
+
+    .scard .info h1 {
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .scard {
+        width: 110% !important;
+        height: 35vh;
+    }
+
+    .scard .info button {
+        top: 70% !important;
+        font-size: 13px;
+    }
+
+    .scard .info h1 {
+        font-size: 15px !important;
+        top: 55% !important;
+    }
+}
+
+@media (max-width: 350px) {
+    .scard {
+        width: 110% !important;
+        height: 25vh;
+    }
+}
+
+.scard:hover:before {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.scard:hover .info {
+    opacity: 1;
+    /* transform: translate(30px, 130px); */
+    /* transform: translate(10%, 150%); */
+    /* width: 70% !important; */
+    /* transform: translateY(130px); */
+}
+
+.scard:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100%;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0) !important;
+    z-index: 2;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.scard img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+}
+
+.scard .info {
+    position: relative;
+    z-index: 3;
+    color: white;
+    opacity: 0;
+    /* transform: translateY(320px); */
+    /* transform: translateY(200%); */
+    transition: 0.5s;
+    /* border: 2px solid white; */
+    width: 70% !important;
+    height: 100% !important;
+}
+
+.scard .info h1 {
+    /* margin: 0px; */
+    position: absolute;
+    top: 40%;
+    left: 8%;
+    /* font-size: 26px !important; */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit the number of lines to display */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scard .info p {
+    letter-spacing: 1px;
+    font-size: 15px;
+    margin-top: 8px;
+}
+
+.scard .info button {
+    position: absolute;
+    top: 75%;
+    left: 8%;
+    padding: 0.4rem;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: rgb(162, 24, 24);
+    color: white;
+    /* font-weight: bold; */
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.scard .info button:hover {
+    background: rgb(92, 8, 8);
+    color: white;
+}
+
+/* .custom-prev-arrow::before {
+    line-height: 1;
+    opacity: 1;
+    color: black !important;
+    transform: translate(0, -50%) !important;
+    -webkit-font-smoothing: antialiased;
+} */
+
+/* Custom previous arrow styles */
+.custom-prev-arrow {
+    position: absolute;
+    top: 50%;
+    left: -50px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 1000;
+
+}
+
+/* Custom next arrow styles */
+.custom-next-arrow {
+    position: absolute;
+    top: 50%;
+    right: -50px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Hover effect for custom arrows */
+.custom-prev-arrow:hover,
+.custom-next-arrow:hover {
+    height: 50px;
+    width: 50px;
+    transition: ease-in-out 0.5s;
+}

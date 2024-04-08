@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import "./RecipeDetails.css"
 import { useNavigate } from 'react-router-dom';
+import SimilarRecipe from '../components/SimilarRecipe';
 
 export default function RecipeDetails() {
     const [isScrollBtnVisible, setIsScrollBtnVisible] = useState(false);
@@ -13,6 +14,7 @@ export default function RecipeDetails() {
     const navigate = useNavigate();
 
     const scrollToTop = () => {
+        window.scrollTo(0, 0);
         if (scrollableDivRef.current) {
             // scrollableDivRef.current.scrollTop = 0;
             scrollableDivRef.current.scrollTo({
@@ -36,13 +38,9 @@ export default function RecipeDetails() {
         if (recipe === null) {
             navigate('/');
         }
-
+        window.scrollTo(0, 0);
+        scrollToTop();
         scrollableDivRef.current.addEventListener('scroll', handleScroll);
-
-        return () => {
-            // eslint-disable-next-line
-            scrollableDivRef.current.removeEventListener('scroll', handleScroll);
-        };
 
     }, [navigate, recipe]);
 
@@ -136,13 +134,18 @@ export default function RecipeDetails() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             }
 
-            <div className='mb-2 demo'>
+            <h2 className="card-title mt-5 text-center" style={{ opacity: "0.8" }}>Similar Recipies</h2>
+            <SimilarRecipe scrollToTop={scrollToTop} className="mt-5" recipe={recipe} rid={recipe.id} />
+
+            <div className='mb-2 demo'>S
                 none
             </div>
+
         </>
     )
 }
